@@ -4,21 +4,22 @@ export function setupKeyboard(buster){
     const input = new Keyboard();
 
     input.addMapping('Space',keyState =>{
-        console.log('Space');
+        //console.log('Space');
+        buster.shoot();
     });
     input.addMapping('ArrowUp',keyState =>{
-            console.log('ArrowUp');
+        //console.log('ArrowUp');
     });
     input.addMapping('ArrowDown',keyState =>{
-        console.log('ArrowDown');
+        //console.log('ArrowDown');
     });
     input.addMapping('ArrowLeft',keyState =>{
         buster.leftDirection();
-        console.log('ArrowLeft');
+        //console.log('ArrowLeft');
     });
     input.addMapping('ArrowRight',keyState =>{
         buster.rightDirection();
-        console.log('ArrowRight');
+        //console.log('ArrowRight');
     });
     return input;
 }

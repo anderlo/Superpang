@@ -19,30 +19,34 @@ class Ball extends Object2D {
         var nuevaFuerza = new Vec2D(0, Settings.GRAVITY * time_passed);
         this.force.x = this.force.x + nuevaFuerza.x;
         this.force.y = this.force.y + nuevaFuerza.y;
-        console.log('actualizar posicion',this.position);
+        //console.log('actualizar posicion',this.position);
         var forcemul = new Vec2D(this.force._mul(time_passed).x,(this.force._mul(time_passed).y));
         this.position.x = this.position.x + forcemul.x;
         this.position.y = this.position.y + forcemul.y;
-        if (this.position.x < this.radius || this.position.x > Settings.SCREEN_WIDTH - this.radius) {
+        if (this.position.x - this.radius <= Settings.MARGIN  || this.position.x + this.radius >= Settings.SCREEN_WIDTH - Settings.MARGIN) {
             this.force = new Vec2D(-this.force.x, this.force.y);
 
-            if (this.position.x < this.radius) {
-                console.log('me he salido por la izquierda');
-                this.position = new Vec2D(2 * this.radius - this.position.x, this.position.y);
+            if (this.position.x - this.radius <= Settings.MARGIN ) {
+                //console.log('me he salido por la izquierda');
+                this.position = new Vec2D(this.radius + Settings.MARGIN, this.position.y);
             }
             else {
-                console.log('me he salido por la no izquierda');
-                this.position = new Vec2D(2 * (Settings.SCREEN_WIDTH - this.radius) - this.position.x, this.position.y);
+                //console.log('me he salido por la no izquierda');
+                this.position = new Vec2D(Settings.SCREEN_WIDTH - this.radius - Settings.MARGIN, this.position.y);
             }
         }
 
-        if (this.position.y > Settings.SCREEN_HEIGHT - this.radius) {
+        if (Settings.SCREEN_HEIGHT - Settings.MARGIN <= this.position.y + this.radius) {
 
+            this.position = new Vec2D(this.x, Settings.SCREEN_HEIGHT - this.radius - Settings.MARGIN );
+           // let nuevaFuerzay = -(((this.y - this.max_height) * 2 * Settings.GRAVITY) ** .5);
+            nuevaFuerza.y = -(((this.y - this.max_height) * 2 * Settings.GRAVITY) ** .5);
+            this.force.y = nuevaFuerza.y;
 
-            this.position = new Vec2D(this.x, 2 * (Settings.SCREEN_HEIGHT - this.radius) -  this.position.y );
-            let nuevaFuerzay = -(((this.y - this.max_height) * 2 * Settings.GRAVITY) ** .5);
-
-            this.force.y = nuevaFuerzay;
+        }
+        if (this.position.y - this.radius <=  Settings.MARGIN) {
+            this.position = new Vec2D(this.position.x , Settings.MARGIN + this.radius);
+            this.force.y = 10 +  nuevaFuerza.y;
 
         }
 
@@ -52,9 +56,9 @@ class Ball extends Object2D {
     draw(ctx) {
         ctx.beginPath();
         ctx.arc(this.position.x,this.position.y,this.radius,0,2*Math.PI,true);
-        ctx.strokeStyle = "#006400";
-        ctx.lineWidth = 10;
-        ctx.fillStyle = "#3cff39";
+        ctx.strokeStyle = "#111464";
+        ctx.lineWidth = 5;
+        ctx.fillStyle = "#44c1ff";
         ctx.fill();
         ctx.stroke();
         ctx.closePath();

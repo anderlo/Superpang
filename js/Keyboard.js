@@ -32,11 +32,13 @@ export default class KeyboardState{
         console.log(this.keyStates)
     }
     listenTo(window){
+
         ['keydown','keyup'].forEach(eventName => {
             window.addEventListener(eventName , event =>{
                 this.handleEvent(event);
             })
         })
+
 
     }
 }

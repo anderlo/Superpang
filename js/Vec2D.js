@@ -15,20 +15,40 @@ class Vec2D {
         // anyadir other a this como escalar
         //
         // devolver this
+        //console.log('ESTOY EN EL ADD');
+       // console.log('typeof ->',typeof(other));
+        if (typeof other == 'number'){
+            console.log('NO SOY UN VECTOR 2D',other);
+            this.x = this.x*other;
+            this.y = this.y*other;
+
+        }
+        else {
+            console.log('SOY UN VECTOR 2D', other);
+            console.log('thisx,thisy',this.x,this.y);
+            this.x = this.x + other.x;
+            this.y = this.y + other.y;
+            console.log('NEW thisx,thisy',this.x,this.y);
+        }
+        /*
         if (typeof other == 'Vec2D'){
-            this.x = other.x;
-            this.y = other.y;
+            console.log('SOY UN VECTOR 2D',other);
+            this.x = this.x + other.x;
+            this.y = this.y + other.y;
         }
         else{
+            console.log('NO SOY UN VECTOR 2D',other);
             this.x = this.x*other;
             this.y = this.y*other;
         }
+        */
     }
 
     _mul(other){
         // devolver un nuevo vector igual a
         // this multiplicado por el escalar other
-        const emaitza = new Vec2D(this.x*other,this.y*other);
+       // console.log(other,this.x,this.y);
+        const emaitza = new Vec2D(this.x * other,this.y * other);
         return emaitza
     }
 

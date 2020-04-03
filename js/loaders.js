@@ -2,6 +2,7 @@ import SpriteSheet from "./SpriteSheet.js";
 import Player from "./Player.js";
 import {Vec2D} from "./Vec2D.js";
 import Settings from './Settings.js'
+import {Ball} from "./Ball.js";
 
 
 export function loadLevel(currentLevel){
@@ -31,4 +32,22 @@ export function loadBuster(image,playerSpec){
     const size = new Vec2D(32,32);
 
     return new Player(size,pos,spriteSheet)
+}
+export function loadBalls(ballsSpec){
+
+    var pelotas = [];
+    for (let i = 0; i < ballsSpec.length; i++) {
+        var posx = ballsSpec[i].pos[0];
+        var posy = ballsSpec[i].pos[1];
+
+        var forcex = ballsSpec[i].force[0];
+        var forcey = ballsSpec[i].force[1];
+
+        var pos = new Vec2D(posx,posy);
+        var force =  new Vec2D(forcex,forcey);
+        //console.log(pos,force);
+        pelotas[i] = new Ball(ballsSpec[i].radius,pos,force);
+    }
+    console.log(pelotas);
+    return pelotas ;
 }

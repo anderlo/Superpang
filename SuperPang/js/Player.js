@@ -16,13 +16,13 @@ export default class Player extends Object2D {
         }//return 'buster';
     }
 
-    constructor(size, pos, spriteSheet, image2) {
+    constructor(size, pos, spriteSheet, spriteHook) {
         super(size, pos);
         this.force = new Vec2D(0, 0);
         this.spriteSheet = spriteSheet;
         this.direction = new Vec2D(0, 0);
         this.distance = 0;
-        this.hookmanager = null;
+        this.hooksprite = null;
         this.hooks = [];
         this.press = false;
         this.pressLeft = false;
@@ -118,7 +118,7 @@ export default class Player extends Object2D {
     }
 
     draw(context) {
-       // console.log('BUSTER => ' ,this.spriteSheet.get(this.routeFrame())[0] )
+       //  console.log('BUSTER => ' ,this.spriteSheet.get(this.routeFrame())[0] )
             if (this.direction.x >= 0) {
                 context.drawImage(this.spriteSheet.get(this.routeFrame())[1],this.position.x, this.position.y);
             }else if (this.direction.x < 0) {

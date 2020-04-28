@@ -15,6 +15,7 @@ class Ball extends Object2D {
         this.max_height = Settings.SCREEN_HEIGHT - 150 - radius * 4;
         this.color = color;
         this.sprite = sprite ;
+        this.gravedad = 0;
     }
 
     update(time_passed) {
@@ -22,40 +23,73 @@ class Ball extends Object2D {
         var nuevaFuerza = new Vec2D(0, Settings.GRAVITY * time_passed);
         this.force.x = this.force.x + nuevaFuerza.x;
         this.force.y = this.force.y + nuevaFuerza.y;
-        //console.log('actualizar posicion',this.position);
+        //this.force.y= Math.max(-this.force.y,-400)
         var forcemul = new Vec2D(this.force._mul(time_passed).x,(this.force._mul(time_passed).y));
         this.position.x = this.position.x + forcemul.x;
         this.position.y = this.position.y + forcemul.y;
-        if (this.position.x - this.radius <= Settings.MARGIN  || this.position.x + this.radius >= Settings.SCREEN_WIDTH) {
+        if (this.position.x - this.radius <= Settings.MARGIN  ||  Settings.SCREEN_WIDTH - Settings.MARGIN <= this.position.x + this.radius ) {
+
             this.force = new Vec2D(-this.force.x, this.force.y);
 
             if (this.position.x - this.radius <= Settings.MARGIN ) {
-                console.log('me he salido por la izquierda');
                 this.position = new Vec2D(this.radius + Settings.MARGIN, this.position.y);
             }
             else {
-                //console.log('me he salido por la derecha');
-                //console.log(this.position.x , this.radius , Settings.SCREEN_WIDTH - Settings.MARGIN );
-                //console.log(this);
-                this.position = new Vec2D(Settings.SCREEN_WIDTH - (Settings.MARGIN + this.radius) , this.position.y);
-                console.log(Settings.SCREEN_WIDTH - (this.radius + Settings.MARGIN), this.position.y );
+                this.position = new Vec2D(Settings.SCREEN_WIDTH - Settings.MARGIN - this.radius , this.y);
             }
         }
 
         if (Settings.SCREEN_HEIGHT - Settings.MARGIN <= this.position.y + this.radius) {
             this.position = new Vec2D(this.x, Settings.SCREEN_HEIGHT - this.radius - Settings.MARGIN );
-           // let nuevaFuerzay = -(((this.y - this.max_height) * 2 * Settings.GRAVITY) ** .5);
-            nuevaFuerza.y = -(((this.y - this.max_height) * 2 * Settings.GRAVITY) ** .5);
-            this.force.y = nuevaFuerza.y;
+            this.force.y =  Math.min(-this.force.y,-400)
 
         }
         if (this.position.y - this.radius <=  Settings.MARGIN) {
             this.position = new Vec2D(this.position.x , Settings.MARGIN + this.radius);
-            this.force.y = 10 +  nuevaFuerza.y;
+            this.force.y= -this.force.y
 
         }
-
+        if (this.color == 'green') {
+            console.log(this.force.y)
+        }
         this.falling = this.force.y > 0;
+
+    /*
+        var cx = this.position.x;
+        var cy = this.position.y;
+
+        var vx = this.force.x;
+        var vy = this.force.y;
+        var gravity = 9.8;
+        var damping = 1;
+        var traction = 1;
+        var radius = this.radius;
+
+        if (cx + radius >= Settings.SCREEN_WIDTH) {
+            vx = -vx * damping;
+            cx = Settings.SCREEN_WIDTH - radius;
+        } else if (cx - radius <= 0) {
+            vx = -vx * damping;
+            cx = radius;
+        }
+        if (cy + radius >= Settings.SCREEN_HEIGHT) {
+            vy = -vy * damping;
+            cy =  Settings.SCREEN_HEIGHT- radius;
+            // traction here
+            vx *= traction;
+        } else if (cy - radius <= 0) {
+            vy = -vy * damping;
+            cy = radius;
+        }
+
+        vy += gravity; // <--- this is it
+
+        cx += vx;
+        cy += vy;
+
+        this.position.x = cx;
+        this.position.y = cy;
+    */
     }
 
     draw(ctx) {

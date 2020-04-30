@@ -29,7 +29,7 @@ export default class KeyboardState{
 
         this.keyStates.set(code,keyState);
         this.keyMap.get(code)(keyState);
-        console.log(this.keyStates)
+        //console.log(this.keyStates)
     }
 
     listenTo(window){

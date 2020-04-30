@@ -1,0 +1,42 @@
+{
+  "player" : {
+    "pos" : [150,400]
+  },
+  "balls" : [
+    {
+      "radius" : 20,
+      "pos" : [0,30],
+      "force" : [90,0],
+      "color" : "green"
+    },
+    {
+      "radius" : 20,
+      "pos" : [30,30],
+      "force" : [-90,0],
+      "color" : "blue"
+    },
+    {
+      "radius" : 20,
+      "pos" : [60,30],
+      "force" : [90,0],
+      "color" : "red"
+    },    {
+      "radius" : 20,
+      "pos" : [90,30],
+      "force" : [90,0],
+      "color" : "green"
+    },
+    {
+      "radius" : 20,
+      "pos" : [120,30],
+      "force" : [-90,0],
+      "color" : "blue"
+    },
+    {
+      "radius" : 20,
+      "pos" : [150,30],
+      "force" : [90,0],
+      "color" : "red"
+    }
+  ]
+}

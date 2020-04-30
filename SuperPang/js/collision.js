@@ -1,5 +1,5 @@
 import {Vec2D} from "./math.js";
-
+import Settings from './Settings.js'
 function calc_angle(point) {
     /*
     Function that takes a Vec2D object and calculates the angle between it
@@ -173,25 +173,52 @@ function ball_to_box(ball, box, solid = false) {
 }
 
 export class CollisionManager {
-    constructor(balls, hooks) {
+    constructor(balls, hooks,bonus,player) {
         this.balls = balls;
         this.hooks = hooks;
+        this.bonus = bonus;
+        this.player = player;
     }
     checkCollisions() {
-        var toDelete = []
+        var toDelete = [];
+        var ball = -999 ;
+        var hook = -999 ;
+        var bonus = -999;
+        var death = 0;
         for (let i = 0; i < this.balls.length; i++) {
             for (let j = 0; j < this.hooks.length; j++) {
-                if (((this.balls[i].position.x - this.balls[i].radius<=this.hooks[j].position.x )&&(this.balls[i].position.x>=this.hooks[j].position.x))
-                    ||((this.balls[i].position.x + this.balls[i].radius >= this.hooks[j].position.x )&&(this.balls[i].position.x<=this.hooks[j].position.x))){
+                if (((this.balls[i].position.x - this.balls[i].radius <= this.hooks[j].position.x) && (this.balls[i].position.x >= this.hooks[j].position.x))
+                    || ((this.balls[i].position.x + this.balls[i].radius >= this.hooks[j].position.x) && (this.balls[i].position.x <= this.hooks[j].position.x))) {
                     if (this.balls[i].position.y + this.balls[i].radius > this.hooks[j].position.y) {
-                        console.log('PANG! ME CHOQUE',i,this.balls[i].radius,this.balls[i].position.x + this.balls[i].radius);
-                        return i
+                        //console.log('PANG! ME CHOQUE',i,this.balls[i].radius,this.balls[i].position.x + this.balls[i].radius);
+                        ball = i;
+                        hook = j;
                     }
                 }
             }
+
+            if (((this.balls[i].position.x - this.balls[i].radius <= this.player.position.x) && (this.balls[i].position.x >= this.player.position.x))
+                || ((this.balls[i].position.x + this.balls[i].radius >=this.player.position.x) && (this.balls[i].position.x <= this.player.position.x))
+                || ((this.balls[i].position.x - this.balls[i].radius <= this.player.position.x + 16) && (this.balls[i].position.x >= this.player.position.x + 16))) {
+                //console.log(this.balls[i].position.y + this.balls[i].radius + Settings.MARGIN + 16 , Settings.SCREEN_WIDTH);
+                if (this.balls[i].position.y + this.balls[i].radius + Settings.MARGIN >= Settings.SCREEN_HEIGHT) {
+                    death = 1;
+                    console.log('MUERTO');
+              }
+            }
         }
-        return -999;
+        for (let k = 0; k < this.bonus.length; k++){
+            if (((this.bonus[k].position.x<=this.player.position.x)&&(this.bonus[k].position.x+Settings.BONUS_SIZE>=this.player.position.x))
+                ||((this.bonus[k].position.x>=this.player.position.x)&&(this.bonus[k].position.x+Settings.BONUS_SIZE<=this.player.position.x))
+                ||((this.bonus[k].position.x<=this.player.position.x+16)&&(this.bonus[k].position.x+Settings.BONUS_SIZE>=this.player.position.x+16))){
+                if (this.bonus[k].position.y + Settings.BONUS_SIZE >= this.player.position.y) {
+                    bonus = k;
+                    console.log('He pillado el bonus');
+                    console.log(this.bonus)
+                }
+            }
+        }
+            return [ball,hook,bonus,death];
     }
 }
-
 export {ball_to_box}

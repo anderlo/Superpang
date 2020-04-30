@@ -18,7 +18,7 @@ export function loadImage(url){
         image.src = url
     });
 }
-export function loadBuster(image,playerSpec){
+export function loadBuster(image,playerSpec,spriterope,spritechain){
     const spriteSheet = new SpriteSheet(image,32,32);
     spriteSheet.define('buster',1,0);
     spriteSheet.define('buster-1',2,0);
@@ -31,7 +31,7 @@ export function loadBuster(image,playerSpec){
     //const pos = new Vec2D(0,0);
     const size = new Vec2D(32,32);
 
-    return new Player(size,pos,spriteSheet)
+    return new Player(size,pos,spriteSheet,spriterope,spritechain);
 }
 export function loadBalls(ballsSpec,spriteSheet){
 
@@ -51,18 +51,28 @@ export function loadBalls(ballsSpec,spriteSheet){
     //console.log(pelotas);
     return pelotas ;
 }
-export function loadHookManager(hookImage, hooks){
-    const spriteSheet = new SpriteSheet('hookRope.png',32,32);
-    spriteSheet.define('top',0,0);
-    spriteSheet.define('rope',0,1);
+export function loadBonus(bonusImage){
+    const spriteSheet = new SpriteSheet(bonusImage,20,20);
+    spriteSheet.define('extrahook',0,0);
+    spriteSheet.define('shoot',1,0);
+    spriteSheet.define('chainhook',2,0);
+    spriteSheet.define('invulnerable',3,0);
+    spriteSheet.define('breakonce',4,0);
+    spriteSheet.define('breakmax',5,0);
+    spriteSheet.define('stoponce',6,0);
+    spriteSheet.define('stopmax',7,0);
+    spriteSheet.define('extraLife',8,0);
+    return spriteSheet;
 }
-export function loadBackground(backgrounds) {
+export function loadBackground(backgrounds,level) {
     const buffer = document.createElement('canvas');
     buffer.width = 256;
     buffer.height = 192;
 // recortar super-sprite y dejarlo preparado en un buffer
     const context = buffer.getContext("2d");
-    context.drawImage(backgrounds, 0, 0,
+    let sx = buffer.width*(level-1);
+    console.log('SX',sx);
+    context.drawImage(backgrounds, sx, 0,
         buffer.width, buffer.height,
         0, 0, buffer.width, buffer.height,);
     return function (ctx) {
@@ -80,4 +90,10 @@ export function createBallFactory(ballsImage,width,height) {
      spriteSheet.define('green', 2, 0);
 
      return spriteSheet ;
+}
+export function createRopeFactory(ropeImage) {
+    let spriteSheet = new SpriteSheet(ropeImage, 5, 20);
+    spriteSheet.define('punta', 0, 0);
+    spriteSheet.define('cuerda', 0, 1);
+    return spriteSheet ;
 }

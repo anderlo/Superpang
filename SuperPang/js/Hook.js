@@ -10,43 +10,48 @@ let HookType = {
 
 class Hook extends Object2D {
 
-    constructor(height, position, hook_type, ind, buffer) {
+    constructor(height, position, hook_type, ind, spriteSheet) {
         super(new Vec2D(6, height), position);
         this.hook_type = hook_type;
         this.expand = true;
         this.timer = Settings.HOOK_DURATION;
-        this.buffer = buffer;
+        this.sprite = spriteSheet;
         this.to_kill = false;
         this.ind = ind;
 
 
     }
 
-    draw(ctx,image) {
+    draw(ctx) {
+        ctx.drawImage(this.sprite.get('punta')[1],this.position.x, this.position.y);
+        for (var i = 1; i < 20; i++) {
+            ctx.drawImage(this.sprite.get('cuerda')[1],this.position.x, this.position.y+(20*i));
+        }
 
-        // pintar el hook de buffer en la posición x,y de este objeto
+        /*
+               // pintar el hook de buffer en la posición x,y de este objeto
 
-        ctx.beginPath();
-        //ctx.strokeStyle = "#111464";
-        ctx.lineWidth = 0;
-        ctx.arc(this.position.x + 1, this.position.y, 4, 0, 2 * Math.PI, true);
-        //ctx.lineWidth = 5;
-        ctx.fillStyle = "#000000";
-        ctx.fill();
-        //ctx.stroke();
-        ctx.closePath();
+               ctx.beginPath();
+               //ctx.strokeStyle = "#111464";
+               ctx.lineWidth = 0;
+               ctx.arc(this.position.x + 1, this.position.y, 4, 0, 2 * Math.PI, true);
+               //ctx.lineWidth = 5;
+               ctx.fillStyle = "#000000";
+               ctx.fill();
+               //ctx.stroke();
+               ctx.closePath();
 
-        ctx.beginPath();
-        ctx.rect(this.position.x, this.position.y,2,Settings.SCREEN_HEIGHT);
-        ctx.fill();
-        //ctx.stroke();
-        ctx.closePath();
-    /*
-        const buffer = document.createElement('canvas');
-        ctx.drawImage(image, this.position.x, this.position.y,
-            buffer.width, buffer.height,
-            0, 0, buffer.width, buffer.height,);
-    */
+               ctx.beginPath();
+               ctx.rect(this.position.x, this.position.y,2,Settings.SCREEN_HEIGHT);
+               ctx.fill();
+               //ctx.stroke();
+               ctx.closePath();
+
+               const buffer = document.createElement('canvas');
+               ctx.drawImage(image, this.position.x, this.position.y,
+                   buffer.width, buffer.height,
+                   0, 0, buffer.width, buffer.height,);
+           */
     }
 
     update(time_passed) {

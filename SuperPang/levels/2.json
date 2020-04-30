@@ -1,0 +1,25 @@
+{
+  "player" : {
+    "pos" : [150,400]
+  },
+  "balls" : [
+    {
+      "radius" : 20,
+      "pos" : [0,30],
+      "force" : [90,0],
+      "color" : "green"
+    },
+    {
+      "radius" : 20,
+      "pos" : [100,30],
+      "force" : [90,0],
+      "color" : "red"
+    },
+    {
+      "radius" : 20,
+      "pos" : [180,30],
+      "force" : [-90,0],
+      "color" : "green"
+    }
+  ]
+}

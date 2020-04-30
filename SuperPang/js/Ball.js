@@ -23,6 +23,7 @@ class Ball extends Object2D {
         var nuevaFuerza = new Vec2D(0, Settings.GRAVITY * time_passed);
         this.force.x = this.force.x + nuevaFuerza.x;
         this.force.y = this.force.y + nuevaFuerza.y;
+        this.force.y = Math.max(this.force.y ,-600);
         //this.force.y= Math.max(-this.force.y,-400)
         var forcemul = new Vec2D(this.force._mul(time_passed).x,(this.force._mul(time_passed).y));
         this.position.x = this.position.x + forcemul.x;
@@ -49,61 +50,12 @@ class Ball extends Object2D {
             this.force.y= -this.force.y
 
         }
-        if (this.color == 'green') {
-            console.log(this.force.y)
-        }
         this.falling = this.force.y > 0;
 
-    /*
-        var cx = this.position.x;
-        var cy = this.position.y;
-
-        var vx = this.force.x;
-        var vy = this.force.y;
-        var gravity = 9.8;
-        var damping = 1;
-        var traction = 1;
-        var radius = this.radius;
-
-        if (cx + radius >= Settings.SCREEN_WIDTH) {
-            vx = -vx * damping;
-            cx = Settings.SCREEN_WIDTH - radius;
-        } else if (cx - radius <= 0) {
-            vx = -vx * damping;
-            cx = radius;
-        }
-        if (cy + radius >= Settings.SCREEN_HEIGHT) {
-            vy = -vy * damping;
-            cy =  Settings.SCREEN_HEIGHT- radius;
-            // traction here
-            vx *= traction;
-        } else if (cy - radius <= 0) {
-            vy = -vy * damping;
-            cy = radius;
-        }
-
-        vy += gravity; // <--- this is it
-
-        cx += vx;
-        cy += vy;
-
-        this.position.x = cx;
-        this.position.y = cy;
-    */
     }
 
     draw(ctx) {
-/*
-        ctx.beginPath();
-        ctx.arc(this.position.x,this.position.y,this.radius,0,2*Math.PI,true);
-        ctx.strokeStyle = "#111464";
-        ctx.lineWidth = 5;
-        ctx.fillStyle = "#44c1ff";
-        ctx.fill();
-        ctx.stroke();
-        ctx.closePath();
-*/
-        //console.log('BALL => ',this.sprite.get(this.color));
+
         ctx.drawImage(this.sprite.get(this.color)[0],this.position.x-this.radius, this.position.y-this.radius);
 
     }
